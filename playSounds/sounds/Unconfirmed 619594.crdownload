@@ -1,0 +1,23 @@
+<html>
+
+<head>
+    <title>JavaScript</title>
+    <style></style>
+</head>
+
+<body>
+<button type="button">Play</button>
+    <script>
+        //https://developer.mozilla.org/en-US/docs/Web/API/HTMLAudioElement
+        const button = document.querySelector("button");
+        const bark = new Audio('sound/bark.mp3');
+        button.addEventListener("click", function () {
+            let duration = bark.duration;
+            let muted = bark.muted;
+            bark.play();
+            console.log(muted);
+        })
+    </script>
+</body>
+
+</html>

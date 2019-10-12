@@ -1,0 +1,45 @@
+.playersBox {
+    margin-top: 30px;
+    display: block;
+    width: 350px;
+    height: 200px;
+    border: 2px;
+    padding: 40px;
+    background-color:darkorchid;
+}
+.player1 {
+    display: inline;
+    font-size: 24px;
+    font-weight: 10px;
+}
+.player2 {
+    display: inline;
+    margin-bottom: 100px;
+    font-size: 24px;
+    margin-left: 240px;
+}
+#roll {
+    margin-top:20px;
+    margin-left:150px;
+    display: grid;
+    height: 35px;
+    width: 70px;
+    background-color:chartreuse;
+    font-style: oblique;
+}
+.diceImg1 {
+    width: 50px;
+}
+.dice1 {
+    display: inline;
+    width: 50px;
+    height: 50px;
+    padding-top: 20px;
+}
+.dice2 {
+    display: inline;
+    width: 50px;
+    height: 50px;
+    padding-left: 260px;
+    margin-top: 20px;
+}

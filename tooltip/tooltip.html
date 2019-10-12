@@ -1,0 +1,38 @@
+
+<html>
+    <head>tooltip</head>
+
+<body>
+    <div>hello this is tooltip data {{data}}
+        <span class="tooltip" data-toolContent="tooltip content">course</span>
+    </div>
+    <div>today we are going to learn how we can set new tooltip options....!!
+    <span class="tooltip" data-toolContent="anything">subjects</span>
+    </div>
+    <div class="output"></div>
+    
+    <script>
+        const data = "hello template..."
+        const tooltip = document.querySelectorAll(".tooltip");
+        const output = document.querySelector(".output");
+        let myInt;
+        for(let i = 0; i<tooltip.length; i++) {
+            tooltip[i].addEventListener('mouseover', function(e) {
+                console.log(this);
+                let holder = this.getAttribute("data-toolContent");
+                clearInterval(myInt);
+                console.log(holder);
+                output.style.display = 'block';
+                output.style.top = e.clientY + 5 + 'px';
+                output.style.left = e.clientX + 5 + 'px';
+                output.style.innerHTML = 'holder';
+                myInt = setInterval(function() {
+                    output.style.display = "none";
+                })
+            })
+        }
+    
+    </script>
+    
+</body>
+</html>

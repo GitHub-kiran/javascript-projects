@@ -1,0 +1,29 @@
+
+<html>
+    <title>Debouncing</title>
+
+    
+    <body>
+        <input type="text" onkeypress="enterText()" id="debounce">
+    
+        <script>
+            let i = 0;
+            const myData = ()=> console.log('heloooo', i++);
+            const debounce = (func, delay) => {
+            console.log('000000');
+              let inDebounce;
+              return function() {
+                console.log('111111');
+                const context = this
+                const args = arguments
+                clearTimeout(inDebounce)
+                console.log('222222');
+                inDebounce = setTimeout(() => {
+                    console.log('33333');
+                    func.apply(context, args) }, delay );
+              }
+            }
+            let enterText = debounce(myData, 2000)
+        </script>
+    </body>
+</html>

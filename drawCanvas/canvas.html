@@ -1,0 +1,34 @@
+
+<html>
+    <title>canvas</title>
+<body>
+    <div id="canvasInAPerfectWorld"></div>
+    <div class="canvas"></div>
+    <script>
+//        context = document.getElementById('canvasInAPerfectWorld').getContext("2d");
+        context = document.getElementById('canvasInAPerfectWorld');
+        canvasDiv = document.querySelector('.canvas');
+        console.log(context);
+        can = document.createElement('canvas');
+        can.setAttribute('width', canvasWidth);
+        can.setAttribute('height', canvasHeight);
+        can.setAttribute('id', 'canvas');
+        canvasDiv.appendChild(canvas);
+        if(typeof G_vmlCanvasManager != 'undefined') {
+            canvas = G_vmlCanvasManager.initElement(canvas);
+        }
+        $('#canvas').mousedown(function(e){
+          var mouseX = e.pageX - this.offsetLeft;
+          var mouseY = e.pageY - this.offsetTop;
+
+          paint = true;
+          addClick(e.pageX - this.offsetLeft, e.pageY - this.offsetTop);
+          redraw();
+        });
+//        context = canvas.getContext("2d");
+    </script>
+    
+</body>
+
+
+</html>

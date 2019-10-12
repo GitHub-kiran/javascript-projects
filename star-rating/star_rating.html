@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Rate App</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<style media="screen">
+  .green {
+    color: green;
+  }
+  .orange {
+    color: orange;
+  }
+</style>
+
+<body>
+<i class="fa fa-star-o" style="font-size:36px"></i>
+<i class="fa fa-star-o" style="font-size:36px"></i>
+<i class="fa fa-star-o" style="font-size:36px"></i>
+<i class="fa fa-star-o" style="font-size:36px"></i>
+<i class="fa fa-star-o" style="font-size:36px"></i>
+<br>
+
+<script>
+    let star = document.querySelectorAll('.fa-star-o');
+    console.log(star);
+    starVal = star;
+    for (let x = 0; x < star.length; x++) {
+        star[x].starValue = (x + 1);
+        ["mouseover", "mouseout", "click"].forEach(function (e) {
+            star[x].addEventListener(e, rateTheApp);
+      })
+    }
+    function rateTheApp(idx) {
+      let t = idx.type;
+      let val = this.starValue;
+      star.forEach(function(ele, ind) {
+        if(t == 'click') {
+          if (val > ind) {
+            ele.classList.add("green");
+          } else {
+          ele.classList.remove("green");
+        }
+      }
+      if(t == 'mouseover') {
+        if (ind < val) {
+          ele.classList.add("orange");
+        } else {
+        ele.classList.remove("orange");
+       }
+     }
+     if(t == 'mouseout') {
+       ele.classList.remove('orange');
+      }
+    })
+    }
+    // if(idx.type == 'click') {
+    //     for (let x = 0; x < this.starValue; x++) {
+    //       star[x].style.color = "green";
+    //     }
+    //   } else if(idx.type == 'mouseover') {
+    //     for (let x = 0; x < this.starValue; x++) {
+    //       star[x].style.color = "orange";
+    //     }
+    //   } else if(idx.type == 'mouseout') {
+    //     for (let x = 0; x < this.starValue; x++) {
+    //       star[x].style.color = "black";
+    //   }
+    // }
+
+</script>
+
+</body>
+</html>

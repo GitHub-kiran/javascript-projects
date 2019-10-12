@@ -1,0 +1,168 @@
+
+<html>
+    <title>pop over</title>
+    <style>
+        .page{
+            display: none;
+        }
+        .btn {
+            cursor: pointer;
+            padding: 15px;
+            text-align: center;
+            background-color: blue;
+            color:white;               
+        }
+        .visible{
+            display: block;
+        }
+        .pop {
+            display: inline-block;
+            border: 1px solid #add;
+            width: 100px;
+            height: 100px;
+            text-align: center;
+            vertical-align: middle;
+            color:darkblue;
+            font-size: 2em;
+            font-family: fantasy;
+        }
+        .game{
+            border: 1px solid black;
+        }
+        .active{
+            border: 1px solid red;
+            background-color: chartreuse;
+        }
+    
+    </style>
+<body>
+    <div class="area">
+        <div class="stats"></div>
+        <div class="main page">
+            <div class="starter">
+                <button type="button" class="btn game1">Start Game
+            </button>
+        </div>
+    </div>
+    <div class="game page"></div>
+    </div>
+</body>
+    
+<script>
+    const playArea = {};
+    const player = {};
+    let gameObj;
+    playArea.stats = document.querySelector(".stats");
+    playArea.main = document.querySelector(".main");
+    playArea.game = document.querySelector(".game");
+    playArea.btns = Array.from(document.querySelectorAll(".btn"));
+    playArea.page = Array.from(document.querySelectorAll(".page"));
+    console.log(playArea);
+    document.addEventListener('DOMContentLoaded', getData);
+     playArea.btns.forEach(function(item) {
+        console.log(item);
+        item.addEventListener('click', handleBtn);
+    })
+    
+    function getData() {
+        playArea.main.classList.add("visible");
+        fetch('https://api.myjson.com/bins/gungm').then(function(rep) {
+            return rep.json();
+        }).then(function(data) {
+            console.log(data)
+            gameObj = data.data;
+            console.log(gameObj);
+            buildBoard();
+        })
+        console.log('dom loaded......');
+    }
+    
+    function buildBoard() {
+        console.log("ready");
+        let rows = 4;
+        let cols = 4;
+        let count = 0;
+        playArea.game.style.width = cols * 100+(cols*2);
+        playArea.game.style.margin = "auto";
+        for(let y=0;y<cols;y++) {
+            let divMain = document.createElement("div");
+            divMain.style.width = cols * 100+(cols*2);
+            for(let x=0;x<rows;x++) {
+                let div = document.createElement('div');
+                div.setAttribute('class', "pop");
+                count++;
+                div.innerText = count;
+                div.count = count;
+                divMain.appendChild(div);
+                
+            }
+            playArea.game.appendChild(divMain);
+        }
+        
+    }
+    
+    function handleBtn(e) {
+        console.log(e.target);
+        if(e.target.classList.contains('game1')) {
+            startGame();
+        }
+    }
+    
+    function startGame() {
+        player.score = 0;
+        player.items = 0;
+        playArea.main.classList.remove("visible");
+        playArea.game.classList.add("visible");
+        console.log('welcome to game');
+        player.gameOver = false;
+        startPop();
+    }
+    
+    function randomUp() {
+        const pops = document.querySelectorAll(".pop");
+        const idx = Math.floor(Math.random()*pops.length);
+        if(pops[idx].count == playArea.last) {
+            return randomUp();
+        }
+        playArea.last = pops[idx].count;
+        return pops[idx];
+    }
+    
+    function startPop() {
+        let newPop = randomUp();
+        console.log(newPop);
+        newPop.classList.add('active');
+        newPop.addEventListener('click', hitPop);
+        const time = Math.round(Math.random()*(1500) + 750);
+        const val = Math.floor(Math.random()*(gameObj.length));
+        newPop.old = newPop.innerText;
+        newPop.v = gameObj[val].value;
+        newPop.innerHTML = gameObj[val].icon + "<br>" + gameObj[val].value;
+        playArea.inPlay = setTimeout(function() {
+            
+           newPop.classList.remove("active"); newPop.removeEventListener("click", hitPop);
+            newPop.innerText = newPop.old;
+            if(!player.gameOver) {
+                startPop();
+            }
+        }, time);
+        
+    }
+    
+    function hitPop(e) {
+        console.log(e.target);
+        console.log(e.target.v);
+        let newPop = e.target;
+        palyer.score = player.score + newPop.v;
+        newPop.classList.remove('active');
+        newPop.removeEventListener('click', hitPop);
+        newPop.innertText = newPop.old;
+        clearTimeout(playArea.inPlay);
+        if(!player.gameOver) {
+            startPop();
+        }
+    }
+    
+</script>
+
+</html>

@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Brick Breaker Ga me</title>
+  </head>
+  <style>
+    .game {
+      color: blue;
+      font-size: 18px;
+      font-weight: bold;
+    }
+    .score, .lives {
+      color: green;
+      font-size: 26px;
+      font-weight: bold;
+    }
+    .container {
+      height: 450px;
+      width: 80%;
+      margin-left: 5%;
+      overflow: hidden;
+      border: 1px solid black;
+      margin-top: 10px;
+      position: relative;
+      background-color: gray;
+    }
+    . brick {
+      position: absolute;
+
+    }
+  </style>
+  <body>
+    <div class="game"> Score : <span class="score"></span></br> Lives : <span class="lives"></span> </div>
+    <div class="container">
+    </div>
+    <script>
+    const container = document.querySelector('.container');
+    let conDim = container.getBoundingClientRect();
+    const player = {
+      gameover: true
+    };
+// adding gameover dynamic element //
+    const gameover = document.createElement('div');
+    gameover.textContent = "Start Game";
+    gameover.style.position = "absolute";
+    gameover.style.color = "white";
+    gameover.style.lineHeight = "100px";
+    gameover.style.textAlign = "center";
+    gameover.style.fontSize = "3em";
+    gameover.style.textTransform = "uppercase";
+    gameover.style.backgroundColor = "yellow";
+    gameover.style.width = "100%";
+    gameover.addEventListener('click', startTheGame);
+    container.appendChild(gameover);
+
+    // adding ball dynamic element //
+    const ball = document.createElement('div');
+    ball.style.backgroundColor = "yellow";
+    ball.style.position = "absolute";
+    ball.style.top = "100px";
+    ball.style.height = "20px";
+    ball.style.width = "20px";
+    ball.style.borderRadius = "25px";
+    ball.style.backgroundImage = "url('tennis.png')";
+    ball.style.backgroundSize = "20px 20px";
+    ball.style.display = "none";
+    container.appendChild(ball);
+
+    // adding paddle dynamic element //
+    const paddle = document.createElement('div');
+    paddle.style.position = "absolute";
+    paddle.style.height = "20px";
+    paddle.style.width = "130px";
+    paddle.style.top = "350px";
+    paddle.style.borderRadius = "20px";
+    paddle.style.backgroundColor = "orange";
+    paddle.style.left = "50%";
+    container.appendChild(paddle);
+    window.addEventListener("keydown", function(e) {
+      if(e.keyCode == 37) paddle.left = true;
+      else if(e.keyCode == 39) paddle.right = true;
+    })
+
+    window.addEventListener("keyup", function(e) {
+      if(e.keyCode == 37) paddle.left = false;
+      else if(e.keyCode == 39) paddle.right = false;
+    })
+
+  function update() {
+          let pCurrent = paddle.offsetLeft;
+          if (paddle.left) {
+              pCurrent -= 5;
+          }
+          if (paddle.right) {
+              pCurrent += 5;
+          }
+          paddle.style.left = pCurrent + 'px';
+          window.requestAnimationFrame(update);
+      }
+
+    function setupBrick(num) {
+      let row = {
+        x: ((conDim.width % 100)/2),
+        y: 50
+      }
+      for(let x=0;x<num;x++) {
+        if(row.x > (conDim.width - 100)) {
+          row.y += 50;
+          row.x = ((conDim.width % 100) / 2);
+        }
+        row.count = x;
+        createBrick(row);
+        row.x += 100;
+      }
+    }
+
+    function createBrick(pos) {
+      const div = document.createElement('div');
+      div.setAttribute('class', 'brick');
+      div.style.backgroundColor = "red";
+      div.style.border = "1px solid black";
+      div.textContent = pos.count + 1;
+      div.style.left = pos.x + 'px';
+      div.style.top = pos.y + 'px';
+      container.appendChild(div);
+    }
+
+    function scoreUpdater() {
+      document.querySelector('.lives').textContent = player.lives;
+      document.querySelector('.score').textContent = player.score;
+    }
+
+    function startTheGame(e) {
+      if(player.gameover) {
+        gameover.style.display = "none";
+        player.gameover = false;
+        player.score = 0;
+        player.lives = 3;
+        ball.style.display = "block";
+        setupBrick(10);
+        // update the score
+        scoreUpdater();
+        // window.requestAnimationFrame(update);
+
+      }
+    }
+    </script>
+  </body>
+</html>

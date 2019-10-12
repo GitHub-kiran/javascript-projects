@@ -1,0 +1,70 @@
+
+.all-boxes {
+    display: inline;
+}
+
+.box1 {
+    width: 50px;
+    height: 50px;
+    background-color: aqua;
+}
+.box1:hover .ch-box1 {
+    display: inline;
+}
+
+.ch-box1 {
+    display: none;
+}
+
+.box2 {
+    width: 50px;
+    height: 50px;
+    background-color: blueviolet;
+}
+.box2:hover .ch-box2 {
+    display: inline;
+}
+
+.ch-box2 {
+    display: none;
+}
+
+.box3 {
+    width: 50px;
+    height: 50px;
+    background-color: coral;
+}
+.box3:hover .ch-box3 {
+    display: inline;
+}
+
+.ch-box3 {
+    display: none;
+}
+
+.box4 {
+    width: 50px;
+    height: 50px;
+    background-color: orchid;
+}
+.box4:hover .ch-box4 {
+    display: inline;
+}
+
+.ch-box4 {
+    display: none;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+

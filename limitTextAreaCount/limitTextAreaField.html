@@ -1,0 +1,33 @@
+
+<html>
+    <title>Enter Message</title>
+
+<body>
+    <textarea class="comment" placeholder="Enter text here.." form="usrform"></textarea>
+    <span class="output"></span>
+    
+</body>
+    
+    
+<script>
+    let com = document.querySelector('.comment');
+    let outp = document.querySelector('.output')
+    let posList = ["keyup","keydown","change"]
+    posList.forEach(function(e){
+        com.addEventListener(e,textCounter);
+    })
+    
+    function textCounter() {
+        if (com.value.length < 15) {
+            outp.innerHTML = "<\br> your word length is : " + com.value.length;
+        } else {
+            com.value = com.value.substring(0,15);
+            outp.innerHTML = " not allowed to enter more than 15 length";
+            outp.style.color = "red";
+        }
+    }
+    
+</script>
+</html>
+
+

@@ -1,0 +1,40 @@
+
+<html>
+    <title>start chatting</title>
+
+<body>
+    <div class="container">
+        <div class="start-chat">
+            <h1>hello welcome to chat app</h1>
+            <div class="chat-container">
+                <input type="text" class="enter-msg" placeholder="type your message here">
+                <button type="submit" class="chat-btn"> start</button>
+                <ul id="messages-ul"></ul>
+                
+            </div>
+        </div>
+    </div>
+    
+    <script src="socket.io/socket.io.js"></script>
+    <script>
+        var sock = io();
+        const room = "my room";
+        const socket = io.connect('/tech');
+        $('button').submit(()=> {
+            let msg = $('.enter-msg').val();
+            socket.emit('message', {msg, room});
+            $('.enter-msg').val('');
+            return false;
+        });
+        
+        socket.on('connect', ()=>{
+            socket.emit('join', {room: room});
+        });
+        
+        socket.on('message', (msg)=> {
+            $('#messages-ul').append($('<li>').text(msg));
+        });
+    </script>
+    
+</body>
+</html>

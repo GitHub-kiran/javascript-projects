@@ -1,0 +1,108 @@
+
+<html>
+    <title>pattern Matching Game</title>
+    <link rel="stylesheet" type="text/css" href="patternMatch.css">
+
+    <body>
+        <h3 style="color:brown" class="start-game">Press Start To Start The Game</h3>
+        <div class="boxes"></div>
+        <span class="result"></span>
+        <button style="color:blue; margin: 10px" type="button" class="game-btn">Start</button>
+
+        <script>
+            colors = ["pink", 'yellow', 'blue', 'green']
+            boxes = document.querySelector('.boxes');
+            btn = document.querySelector('button');
+            res = document.querySelector('.result');
+            window.addEventListener('load', setup);
+            compClick = [];
+            playerClick = [];
+            let inPlay = false;
+            let playNum = 3;
+
+            btn.addEventListener("click", function () {
+                res.innerHTML = "";
+            if (!inPlay) {
+                player();
+                }
+            })
+
+            function player() {
+                btn.disabled = true;
+                gameClicks = [];
+                userClicks = [];
+                runSequence(playNum);
+            }
+
+            function runSequence(num) {
+                let squ = document.querySelectorAll(".box");
+                num--;
+                if(num<0){
+                    inPlay = true;
+                    return;
+                }
+                let rand = Math.floor(Math.random()*colors.length);
+                console.log(rand);
+                compClick.push(colors[rand]);
+                console.log(compClick);
+                squ[rand].style.opacity = "1";
+                setTimeout(function() {
+                    squ[rand].style.opacity = "0.5";
+                    setTimeout(function() {
+                        runSequence(num);
+                    }, 200)
+                }, 500);
+            }
+
+
+            function setup() {
+                for(let i=0; i<colors.length; i++) {
+                    let div = eleFactory("div");
+                    div.classList.add('box');
+                    div.style.backgroundColor = colors[i];
+                    div.style.opacity = 0.5;
+                    div.myColor = colors[i];
+                    div.addEventListener('click', checkAns);
+                    boxes.appendChild(div);
+                }
+            }
+
+            function checkAns(e) {
+                if(inPlay) {
+                    ele = e.target;
+                    playerClick.push(ele.myColor);
+                    ele.style.opacity = "1";
+                    setTimeout(function() {
+                        ele.style.opacity = "0.5";
+                    },500);
+
+                    if(playerClick.length == compClick.length) {
+                        inPlay = false;
+                        stopGame();
+                    }
+                    console.log(playerClick);
+                }
+            }
+
+            function stopGame() {
+                btn.disabled = false;
+                console.log(playerClick, compClick);
+                if(playerClick.toString() == compClick.toString()) {
+                    playNum++;
+                    res.innerHTML = "PASSED";
+                    res.style.color = "green";
+                } else {
+                    res.innerHTML = "FAILED";
+                    res.style.color = "red";
+                }
+            }
+
+            function eleFactory(elType) {
+            let ele = document.createElement(elType);
+            return ele;
+            }
+
+        </script>
+
+    </body>
+</html>

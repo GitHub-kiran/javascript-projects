@@ -1,0 +1,11 @@
+.offsetItem {
+    background-color:chartreuse;
+    padding: 100px;
+    text-align: center;
+    outline-width: thick;
+    width: 60px;
+    height: 40px;
+}
+.btn-move:hover {
+    color:blue;
+}

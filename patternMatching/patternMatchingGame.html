@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Pattern Matching Game</title>
+  </head>
+  <style media="screen">
+    .boxes {
+      height: 100px;
+      width: 400px;
+      border: 1px solid black;
+    }
+    .box1 {
+      display:inline-block;
+      float: left;
+      width: 25%;
+      height: 100%;
+      background: red;
+    }
+    .box2 {
+      display:inline-block;
+      float: left;
+      width: 25%;
+      height: 100%;
+      background: blue;
+    }
+    .box3 {
+      display:inline-block;
+      float: left;
+      width: 25%;
+      height: 100%;
+      background: green;
+    }
+    .box4 {
+      display:inline-block;
+      float: left;
+      width: 25%;
+      height: 100%;
+      background: yellow;
+    }
+    button {
+      posi: center;
+      margin-top: 10px;
+      margin-left: 140px;
+    }
+    .inner {
+      opacity: 0.5;
+    }
+    .result {
+      color: blue;
+    }
+    .clr {
+      margin-left: 10px;
+    }
+  </style>
+  <body>
+    <div class="boxes">
+      <div class="inner box1">1</div>
+      <div class="inner box2">2</div>
+      <div class="inner box3">3</div>
+      <div class="inner box4">4</div>
+    </div>
+    <button type="button" class="btn" name="button">Play</button>
+    <button type="button" class="clr" name="button">Reset</button>
+  </br></br> Result is :
+    <div class="result"></div>
+    <script>
+      var box = document.querySelectorAll('.inner');
+      var randList = [];
+      var playerClick = [];
+      var playerStatus = 0;
+      btn = document.querySelector('.btn');
+      clr = document.querySelector('.clr');
+      res = document.querySelector('.result');
+
+      // method for self click
+      btn.addEventListener('click', function() {
+        clearAll();
+        btn.disabled = false;
+        box.forEach(function(e) {
+        rand = Math.floor((Math.random()) * 10) % 4;
+        randList.push(box[rand]);
+        });
+        highlightImage(randList);
+      });
+
+      // // method for reset game
+      clr.addEventListener('click', clearAll);
+      function clearAll(e) {
+        randList = [];
+        playerClick = [];
+        res.innerHTML = '';
+        playerStatus = 0;
+      }
+
+      // method for player click
+        for(let i=0; i<box.length; i++) {
+          box[i].addEventListener('click', userClick);
+        }
+
+
+      function userClick(e) {
+        ele = e.target;
+        playerClick.push(ele);
+        ele.style.opacity = "1";
+        setTimeout(function() {
+            ele.style.opacity = "0.5";
+        },200);
+        finaliseResult(randList, playerClick);
+      }
+
+      // check for final result
+      function finaliseResult(randList, playerClick) {
+        if(randList.length == playerClick.length) {
+          for(let i=0; i<randList.length; i++) {
+            if(randList[i].getAttribute('class') != playerClick[i].getAttribute('class')) {
+              res.innerHTML = '<h1> Failed </h1>'
+              res.style.color = "red";
+            } else {
+              playerStatus += 1;
+            }
+          }
+        }
+        if(playerStatus == randList.length && playerStatus == playerClick.length) {
+          res.innerHTML = '<h1> PASSED </h1>';
+          res.style.color = "green";
+        }
+      }
+
+      // highlight image on user click
+      function highlightImage(randList) {
+          for(let i=0; i<randList.length; i++) {
+            (function(i) {
+              setTimeout(function () {
+                randList[i].style.opacity = "1";
+                setTimeout(function () {
+                  randList[i].style.opacity = "0.5";
+                }, 300);
+              }, 500*i);
+            })(i);
+          }
+      }
+    </script>
+  </body>
+</html>

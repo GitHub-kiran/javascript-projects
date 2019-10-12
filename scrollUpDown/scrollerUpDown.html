@@ -1,0 +1,51 @@
+
+<html>
+    <title>scroll page</title>
+<style>
+    .all-btn {
+        display: block;
+    }
+    .btn {
+        display: inline-block;
+        margin: 8px;
+    }
+    
+</style>
+<body>
+    <textarea type="text" rows="10" cols="50" class="area"></textarea>
+    <div class="all-btn">
+        <button type="button" id="up" class="up btn">scroll up</button>
+        <button type="button" id="down" class="down btn">scroll down</button>
+    </div>
+</body>
+<script>
+    area = document.querySelector('.area');
+    upBtn = document.querySelector('.up');
+    downBtn = document.querySelector('.down');
+    console.log(upBtn, downBtn);
+    downBtn.addEventListener('click', scrollToDown)
+    upBtn.addEventListener('click', scrollToUp);
+    
+    
+    function scrollToUp() {
+        console.log('inside..... up');
+        area.scrollTop = 0;
+    }
+    
+    function scrollToDown() {
+        console.log('inside..... down');
+        let newScroll;
+        let moreLen = 1
+        for(let i =0; i<moreLen; i++) {
+            newScroll = area.scrollTop + 20;
+            area.scrollTop = newScroll;
+            if(area.scrollTop < newScroll) break;
+            moreLen += 1;
+        }        
+    }
+    
+</script>
+    
+</html>
+
+

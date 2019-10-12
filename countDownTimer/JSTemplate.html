@@ -1,0 +1,92 @@
+<html>
+    <head>Count Down Timer</head>
+
+    <body>
+        <input type="date" class="bday">
+        <div>
+            <span class="error-scene"></span>
+        </div>
+        <div class="opt1">
+            <span><span class="days"> 0</span>days</span>
+            <span><span class="hours"> 0</span>hours</span>
+            <span><span class="min"> 0</span>minutes</span>
+            <span><span class="sec"> 0</span>seconds</span>
+        </div>
+        <script>
+            let dateE;
+            let inp;
+            days = document.querySelector('.days');
+            hours = document.querySelector('.hours');
+            mins = document.querySelector('.min');
+            secs = document.querySelector('.sec');
+            clock = document.querySelector('.opt1');
+            err = document.querySelector('.error-scene');
+            document.querySelector('.bday').addEventListener("change", function() {
+                inp = this.value;
+                dateE = new Date(inp);
+                setTimer(dateE);
+            })
+            let setTimer = function(dateE) {
+                console.log(dateE);
+                year = dateE.getFullYear()
+                month = dateE.getMonth();
+                day = dateE.getDay();
+                hours = dateE.getHours();
+                min = dateE.getMinutes();
+                sec = dateE.getSeconds();
+                startClock(dateE);
+            }
+
+            startClock = function (d) {
+                let val = timeLeft(d);
+                for(let pro in val) {
+                    let el = clock.querySelector('.' + pro);
+                    if(el) {
+                        el.innerHTML = val[pro];
+                    }
+                }
+            }    
+            
+            timeLeft = function (d) {
+                let curDate = new Date();
+                let dd = Date.parse(d) - Date.parse(curDate);
+                
+                let sec = Math.floor((dd/1000)%60);
+                let min = Math.floor((dd/1000/60)%60);
+                let hours = Math.floor((dd/(1000*60*60))%24);
+                let days = Math.floor(dd/(1000*60*24));
+                return { "total": dd,
+                    "days": days,
+                    "hours": hours,
+                    "minutes": min,
+                    "seconds": sec
+                };
+            }    
+                
+                
+                
+                
+                
+                
+                
+                // get todays date
+//                todyDate = new Date();
+//                console.log(todyDate);
+//                todyDate_year = todyDate.getFullYear();
+//                todyDate_month = todyDate.getMonth();
+//                todyDate_day = todyDate.getDay();
+//                todyDate_sec = todyDate.getSeconds();
+//
+//                console.log(todyDate_year, year);
+//                if (todyDate_year > year) {
+//                    err.innerHTML = 'can not set timer for previous date';
+//                    err.style.color = 'red';
+//                } else {
+//                    days.innerHTML = day;
+//                    hours.innerHTML = hours;
+//                    mins.innerHTML = min;
+//                    secs.innerHTML = sec;
+//                }            
+        </script>
+    </body>
+</html>

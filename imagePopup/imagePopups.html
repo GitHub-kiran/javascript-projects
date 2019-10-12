@@ -1,0 +1,90 @@
+
+<html>
+    <title>
+        Image Popup
+    </title>
+    <style>
+        .myImages {
+            display: flex;
+            width : 200px;
+            height : 200px;
+        }
+        .imgList:hover {
+            cursor: pointer;
+        }
+
+        .imgList {
+            display: flex;
+            background-color: rgba(0,0,255);
+            filter: blur(2px);
+            width : 150px;
+            height : 150px;
+        }
+        .cross {
+            position: absolute;
+            top: 10px;
+            right: 5%;
+            z-index: 105;
+            cursor: pointer;
+            color: white;
+            background-color: black;
+            padding: 5px;
+        }
+    </style>
+
+<body>
+    <div class="myImages">
+    </div>
+    <button class="left"><</button>
+    <button class="right">></button>
+</body>
+
+<script>
+    const output = document.querySelector(".output");
+    let imgs = document.querySelector('.myImages');
+    for(let i=1; i<=5;i++) {
+        imgEle = document.createElement("img");
+        imgEle.classList.add('imgList')
+        imgEle.src = "nature/img" + i +'.jpg';
+        imgs.appendChild(imgEle);
+    }
+
+    left = document.querySelector('.left');
+    right = document.querySelector('.right');
+
+    allimgs = document.querySelectorAll('.imgList');
+    for(let i=0; i<allimgs.length; i++) {
+        curImg = allimgs[i];
+        allimgs[i].addEventListener('click', clickImg);
+    }
+
+    function clickImg(e) {
+        // make sure all other images is clear
+        clearProp(e);
+        ele = e.target;
+        ele.style.width = ele.style.width == "250px" ? "150px" : "250px";
+        ele.style.height = ele.style.height == "250px" ? "150px" : "250px";
+        ele.style.filter = ele.style.filter == "blur(0px)" ? "blur(2px)" : "blur(0px)";
+
+        if(ele.style.width == "250px") {
+            let cross = document.createElement("span");
+            cross.classList.add('cross');
+            ele.appendChild(cross);
+        }
+
+    }
+
+    function clearProp(e) {
+        allimgs = document.querySelectorAll('.imgList');
+        ele = e.target;
+        for(let i=0; i<allimgs.length; i++) {
+            if(allimgs[i] != ele) {
+                allimgs[i].style.width = "150px";
+                allimgs[i].style.height = "150px";
+                allimgs[i].style.filter = "blur(2px)";
+            }
+        }
+    }
+
+</script>
+</html>

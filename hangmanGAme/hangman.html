@@ -1,0 +1,118 @@
+
+<html>
+    <title>hangman game</title>
+    <style>
+        .letter {
+            display: inline-block;
+            padding: 5px;
+            border: 1px solid #ddd;
+            border-radius: 15px;
+            margin-left: 10px;
+            cursor: pointer;
+            font-size: 1.5em;
+        }
+        
+        .letter2 {
+            display: inline-block;
+            padding: 5px;
+            margin-left: 10px;
+            font-size: 3em;
+        }
+        
+        .done {
+            cursor: default;
+            color: #ddd;
+            border: 1px solid white;
+        }
+        button{
+            background-color: red;
+            width:200px;
+            text-align: center;
+            padding:20px;
+            font-size: 2em;
+            color:white;
+        }
+        .message{
+            font-size: 2.5em;
+            margin-top:20px;
+            font-family: cursive;
+        }
+    </style>
+<body>
+    <div class="output1"></div>
+    <div class="output2"></div>
+    <div class="message"></div>
+    <button>Start</button>
+<script>
+    var myWords = ['aa', 'bb', 'cc'];
+//    var myWords = ['javascript', 'kiran', 'prajapati'];
+    let player = {};
+    const message =     document.querySelector('.message');
+    const outp1 = document.querySelector('.output1');
+    const outp2 = document.querySelector('.output2');
+    const btn = document.querySelector('button');
+    
+    btn.addEventListener('click', function(){
+        outp1.innerHTML = '';
+        outp2.innerHTML = '';
+        if(myWords.length > 0){  
+            btn.style.display = "none";
+            myWords.sort(function() {
+                return .5 - Math.random();
+            });
+        let theWord = myWords.shift();
+        player.solution = theWord.split("");
+        console.log(player.solution);
+        } else {
+            console.log('no more words found');
+        }
+        buildBoard();
+    });
+    
+    function buildBoard() {
+        player.solution.forEach(function(letter) {
+            let div = document.createElement("div");
+            div.classList.add('letter2');
+            div.innerText = "_";
+            div.myLetter = letter;
+            outp2.appendChild(div);
+        });
+        let solutionLetter = document.querySelectorAll('.letter2')
+        for(let x=0; x<26;x++) {
+            let temp = String.fromCharCode(65+x);
+            console.log(temp);
+            let div = document.createElement('div');
+            div.classList.add('letter');
+            div.myLetter = temp;
+            let handler = function(e) {
+                div.removeEventListener('click', handler);
+                div.classList.add('done');
+                let counter = 0;
+                let guess = 0;
+                solutionLetter.forEach(function(letter) {
+                    if(letter.innerHTML != "_") {
+                        counter++;
+                    }
+                    if(letter.myLetter.toUpperCase() === temp){
+                        letter.innerHTML = temp;
+                        guess++;
+                    }
+                })
+                if(guess > 0){
+                    console.log('you found'+guess+'letters')
+                }
+                let letterLeft = solutionLetter.length - (guess+counter);
+                console.log(letterLeft);
+                if(letterLeft<1){
+                    btn.style.display = "block";
+                }
+            }
+            div.addEventListener('click', handler);
+            div.innerHTML = temp;
+            outp1.appendChild(div);
+        }
+    }
+
+</script>
+</body>
+</html>

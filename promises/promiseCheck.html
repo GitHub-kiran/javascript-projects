@@ -1,0 +1,51 @@
+
+<html>
+
+<body>
+    <h1>promises</h1>
+</body>
+<script>
+    console.log("person 1: show ticket");
+    console.log("person 2: show ticket");
+    
+    const preview = async() => {
+        let bringTkt = new Promise((res, rej)=>{
+        setTimeout(() => {
+        res('ticket');
+    }, 3000);
+    });
+        const getPopcorn = new Promise((res, rej) => res('popcorn'));
+        
+        const getCheez = new Promise((res, rej) => res('get cheez'));
+        
+        let tkt = await bringTkt;
+        console.log(`${tkt}`)
+        let popcorn = await getPopcorn;
+        console.log(`${popcorn}`);
+        let cheez = await getCheez;
+        console.log(`${cheez}`)
+        return tkt;
+    }
+    
+    preview().then((m) => console.log(m));
+        
+    
+//    const popcorn = bringTkt.then((result) => {
+//        return new Promise((res, rej) => res(`hi ${result}`));
+//        
+//    })
+//    
+//    const cheez = popcorn.then((result) => {
+//        return new Promise((res, rej) => res(`hello ${result}`));
+//    });
+//    
+//    cheez.then((result)=> {
+//        console.log(`${result}`)
+//    })
+    
+    
+    console.log("person 4: show ticket");
+    console.log("person 5: show ticket");
+</script>
+    
+</html>

@@ -1,0 +1,31 @@
+
+<html>
+    <title>Debouncing</title>
+
+    
+    <body>
+        <input type="text" onkeypress="enterText()" id="debounce">
+    
+        <script>
+            let i = 0;
+            const myData = ()=> console.log('heloooo', i++);
+            const thrott = (func, delay) => {
+            console.log('000000');
+              let inThrott;
+              let tFlag = true;
+              return function() {
+                const context = this
+                const args = arguments
+                if(tFlag) {
+                    func.apply(context, args) };
+                    tFlag = false;
+                    clearTimeout(inThrott);
+                    inThrott = setTimeout(() => {
+                        console.log('inside flagggg');
+                        tFlag = true;
+                    }, delay)
+                }
+            }
+        </script>
+    </body>
+</html>

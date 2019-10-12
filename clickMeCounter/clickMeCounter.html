@@ -1,0 +1,41 @@
+
+<html>
+    <title>
+        Click Me
+    </title>
+<body>
+    <button type="button" class="btn">click me</button>
+    <button type="button" class="btn-clear">clear</button>
+    <span class="testEle"></span>
+<script>
+    btn = document.querySelector('.btn');
+    clr = document.querySelector('.btn-clear');
+    txt = document.querySelector('.testEle');
+    var counter = 0;
+    btn.addEventListener('click', clickMe);
+    clr.addEventListener('click', clearMe);
+    
+    window.addEventListener('load', loadMe);
+    
+    function clickMe() {
+        counter = counter ? ++counter : (window.sessionStorage.getItem('counter') ? window.sessionStorage.getItem('counter') : 1);
+//        counter = counter ? counter : 1;
+        txt.innerHTML = 'you have clicked : ' + counter
+        window.sessionStorage.setItem('counter', counter);
+    }
+    
+    function loadMe() {
+        counter = counter ? counter : (window.sessionStorage.getItem('counter') ? window.sessionStorage.getItem('counter') : null);
+        let msg = counter ? 'you have clicked : ' + counter : '';
+        txt.innerHTML = msg;
+    }
+    
+    function clearMe() {
+        txt.innerHTML = '';
+        counter = 0;
+        window.sessionStorage.removeItem('counter');
+    }
+    
+</script>
+</body>
+</html>

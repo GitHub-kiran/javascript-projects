@@ -1,0 +1,124 @@
+<html>
+<head>
+    <button class="btn-move" onclick="goLeft()">go left</button>
+    <button class="btn-move" onclick="goRight()">go right</button>
+    <button class="btn-move" onclick="goUp()">go up</button>
+    <button class="btn-move" onclick="goDown()">go down</button>
+    <script>
+        let myBlock;
+        let rColorHex;
+        let moveList = [];
+        document.addEventListener("DOMContentLoaded", function () {
+            myBlock = document.createElement("div");
+            myBlock.textContent = "hello world";
+            myBlock.style.width = "100px";
+            myBlock.style.height = "100px";
+            myBlock.style.backgroundColor = "red";
+            myBlock.style.color = "white";
+            myBlock.style.lineHeight = "100px";
+            myBlock.style.textAlign = "center";
+            myBlock.style.position = "absolute";
+            myBlock.style.top = "100px";
+            myBlock.style.left = "150px";
+            document.body.appendChild(myBlock);
+        })
+        window.addEventListener("keydown", function (e) {
+            e.preventDefault();
+            let keyC = e.keyCode;
+            console.log(keyC);
+            rColor = Math.random().toString(16);
+            rColorHex = rColor.substr(-6);
+            if(keyC == 37) {
+                goLeft();
+                addMover('Left');
+            }
+            else if(keyC == 39) {
+                goRight();
+                addMover('Right');
+            }
+            else if(keyC == 38) {
+                goUp();
+                addMover('Up');
+            }
+            else if(keyC == 40) {
+                goDown();
+                addMover('Down');
+            }
+            else if(keyC == 13) {
+                finalMove();
+            }
+        })
+        
+        function addMover(mover) {
+            moverObj = document.createElement("div");
+            moverObj.textContent = mover
+            moverObj.style.width = "50px";
+            moverObj.style.height = "20px";
+            moverObj.style.backgroundColor = "blue";
+            moverObj.style.color = "white";
+            moverObj.style.lineHeight = "100px";
+            moverObj.style.textAlign = "center";
+            document.body.appendChild(moverObj);
+            moveList.push(mover);
+        }
+    
+        let finalMove = function() {
+            console.log(moveList);
+            for(let i = moveList.length-1; i >= 0; i--) {
+                if(moveList[i] == 'Left'){
+                    console.log('inside left');
+                    goLeft();
+                    moveList.pop();
+                } else if(moveList[i] == 'Right'){
+                    goRight();
+                    console.log('inside right');
+                    setTimeout(function() { 
+                    }, 3000);
+                    moveList.pop();
+                } else if(moveList[i] == 'Up'){
+                    console.log('inside up');
+                    goUp();
+                    setTimeout(function() { 
+                    }, 3000);
+                    moveList.pop();
+                } else if(moveList[i] == 'Down'){
+                    goDown();
+                    console.log('inside down');
+                    setTimeout(function() { 
+                    }, 3000);
+                    moveList.pop();
+                }
+            }
+        }
+
+        function goLeft () {
+            let temp = myBlock.offsetLeft;
+            temp = temp - 50;
+            myBlock.style.left = temp + "px";
+            myBlock.style.backgroundColor = rColorHex;
+        }
+
+        function goRight() {
+            let temp = myBlock.offsetLeft;
+            temp = temp + 50;
+            myBlock.style.left = temp + "px";
+            myBlock.style.backgroundColor = rColorHex;
+        }
+
+        function goUp() {
+            let temp = myBlock.offsetTop;
+            temp = temp - 50;
+            myBlock.style.top = temp + "px";
+            myBlock.style.backgroundColor = rColorHex;
+        }
+
+        function goDown() {
+            let temp = myBlock.offsetTop;
+            temp = temp + 50;
+            myBlock.style.top = temp + "px";
+            myBlock.style.backgroundColor = rColorHex;
+        }
+    </script>
+</head>
+<body> </body>
+</html>
